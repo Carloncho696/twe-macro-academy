@@ -31,7 +31,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       try {
         // Leer perfil desde Firestore
-        const userProfile = await getUserProfile(u.uid);
+        const userProfile = await getUserProfile(u.uid, u.email);
+
         setProfile(userProfile);
       } catch (err) {
         console.error("Error leyendo perfil:", err);
