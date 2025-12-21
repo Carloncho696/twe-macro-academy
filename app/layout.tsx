@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/lib/auth-context";
+import WhatsAppButton from "@/components/WhatsAppButton";
+
 
 export const metadata: Metadata = {
   title: "TWE Macro Academy",
@@ -17,6 +19,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="pt-20 md:pt-24">{children}</main>
           <Footer />
         </AuthProvider>
+        <WhatsAppButton />
+
       </body>
     </html>
   );

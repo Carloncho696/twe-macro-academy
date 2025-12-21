@@ -1,7 +1,7 @@
 // components/layout/Footer.tsx
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, MessageCircle, Linkedin, Twitter } from "lucide-react";
+import { Mail, MessageCircle, Linkedin, Twitter, Instagram, Send, Facebook } from "lucide-react";
 
 const currentYear = new Date().getFullYear();
 
@@ -90,7 +90,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="/terms"
+                  href="/terminos"
                   className="text-sm text-slate-400 transition-colors hover:text-cyan-300"
                 >
                   Términos y Condiciones
@@ -98,7 +98,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/privacy"
+                  href="/privacidad"
                   className="text-sm text-slate-400 transition-colors hover:text-cyan-300"
                 >
                   Política de Privacidad
@@ -106,7 +106,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/disclaimer"
+                  href="/aviso-de-riesgo"
                   className="text-sm text-slate-400 transition-colors hover:text-cyan-300"
                 >
                   Aviso de Riesgo
@@ -142,22 +142,49 @@ export default function Footer() {
               </li>
             </ul>
 
-            {/* Social Icons */}
-            <div className="mt-6 flex items-center gap-4">
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-slate-400 transition-colors hover:bg-slate-800 hover:text-cyan-300"
-              >
-                <Twitter className="h-4 w-4" />
-              </a>
+        {/* Social Icons */}
+<div className="mt-6 flex items-center gap-4">
+  {/* Instagram */}
+  <a
+    href="https://www.instagram.com/twe_macro_academy_arequipa/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-slate-400 transition-colors hover:bg-slate-800 hover:text-cyan-300"
+  >
+    <Instagram className="h-4 w-4" />
+  </a>
 
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-slate-400 transition-colors hover:bg-slate-800 hover:text-cyan-300"
-              >
-                <Linkedin className="h-4 w-4" />
-              </a>
-            </div>
+  {/* Telegram */}
+  <a
+    href="https://t.me/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-slate-400 transition-colors hover:bg-slate-800 hover:text-cyan-300"
+  >
+    <Send className="h-4 w-4" />
+  </a>
+
+  {/* Facebook */}
+  <a
+    href="https://www.facebook.com/profile.php?id=100076154352747"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-slate-400 transition-colors hover:bg-slate-800 hover:text-cyan-300"
+  >
+    <Facebook className="h-4 w-4" />
+  </a>
+
+  {/* LinkedIn (si lo quieres mantener) */}
+  <a
+    href="https://www.linkedin.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-slate-400 transition-colors hover:bg-slate-800 hover:text-cyan-300"
+  >
+    <Linkedin className="h-4 w-4" />
+  </a>
+</div>
+
           </div>
         </div>
 

@@ -13,11 +13,26 @@ export default function ProtectedRoute({
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !user) router.replace("/auth/login");
+    if (loading) return;
+
+    // 1) Si no hay usuario -> login
+    if (!user) {
+      router.replace("/auth/login");
+      return;
+    }
+
+    // 2) Si hay usuario pero NO verificó -> verify
+    if (!user.emailVerified) {
+      router.replace("/auth/verify");
+      return;
+    }
   }, [loading, user, router]);
 
   if (loading) return null;
   if (!user) return null;
+
+  // Mientras redirige a /auth/verify, evitamos renderizar children
+  if (!user.emailVerified) return null;
 
   return <>{children}</>;
 }

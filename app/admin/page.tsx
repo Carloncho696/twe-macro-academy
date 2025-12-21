@@ -30,20 +30,29 @@ export default function AdminPage() {
     field: "book" | "video";
   } | null>(null);
 
-  async function loadUsers() {
-    setFetching(true);
-    try {
-      const snap = await getDocs(collection(db, "users"));
-      const data = snap.docs.map((d) => ({
-        id: d.id,
-        ...(d.data() as any),
-      })) as Row[];
+async function loadUsers() {
+  setFetching(true);
+  try {
+    const snap = await getDocs(collection(db, "users"));
 
-      setRows(data);
-    } finally {
-      setFetching(false);
-    }
+    const data: Row[] = snap.docs.map((d) => {
+      const raw = d.data() as Partial<Row>;
+
+      return {
+        id: d.id,
+        email: raw.email ?? "",
+        role: (raw.role ?? "student") as Row["role"],
+        hasBookAccess: !!raw.hasBookAccess,
+        hasVideoAccess: !!raw.hasVideoAccess,
+      };
+    });
+
+    setRows(data);
+  } finally {
+    setFetching(false);
   }
+}
+
 
   useEffect(() => {
     if (loading) return;

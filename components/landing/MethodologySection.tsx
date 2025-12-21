@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, FileText } from "lucide-react";
+import { ArrowRight, FileText, Send } from "lucide-react";
+
 
 const BROCHURE_URL = "/brochure/TWE-Macro-Academy.pdf"; // cambia a tu ruta real
 
@@ -87,6 +88,19 @@ const MethodologySection = () => {
               >
                 Ver brochure (PDF) <FileText className="h-4 w-4" />
               </a>
+              <a
+  href="https://t.me/TU_LINK_DE_TELEGRAM"
+  target="_blank"
+  rel="noreferrer"
+  className="inline-flex w-fit items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/60 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:border-cyan-400/40 hover:text-cyan-300"
+>
+  Unirte al Telegram <Send className="h-4 w-4" />
+  <p className="mt-2 text-xs text-slate-400">
+  Comunidad privada, avisos importantes y análisis en tiempo real.
+</p>
+
+</a>
+
             </div>
 
             <p className="mt-3 text-xs text-slate-400">

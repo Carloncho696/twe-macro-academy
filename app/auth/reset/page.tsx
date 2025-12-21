@@ -11,20 +11,26 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    setError(null);
+async function handleSubmit(e: FormEvent) {
+  e.preventDefault();
+  setError(null);
 
-    try {
-      setLoading(true);
-      await sendPasswordResetEmail(auth, email);
-      setSent(true);
-    } catch (err: any) {
-      setError(err?.message ?? "No se pudo enviar el correo de recuperación.");
-    } finally {
-      setLoading(false);
-    }
+  try {
+    setLoading(true);
+    await sendPasswordResetEmail(auth, email);
+    setSent(true);
+  } catch (err: unknown) {
+    const message =
+      err instanceof Error
+        ? err.message
+        : "No se pudo enviar el correo de recuperación.";
+
+    setError(message);
+  } finally {
+    setLoading(false);
   }
+}
+
 
   return (
     <div className="min-h-screen bg-[#050816] flex items-center justify-center px-4">

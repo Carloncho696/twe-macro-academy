@@ -9,6 +9,8 @@ import { auth } from "@/lib/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendEmailVerification,
+  signOut,
 } from "firebase/auth";
 
 type AuthMode = "login" | "register";
@@ -38,9 +40,15 @@ export default function AuthCard({ mode }: AuthCardProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  function normalizeEmail(value: string) {
+    return value.trim().toLowerCase();
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError(null);
+
+    const cleanEmail = normalizeEmail(email);
 
     try {
       setLoading(true);
@@ -50,14 +58,57 @@ export default function AuthCard({ mode }: AuthCardProps) {
           setError("Las contraseñas no coinciden.");
           return;
         }
-        await createUserWithEmailAndPassword(auth, email, password);
+
+        // ✅ REGISTER
+        const cred = await createUserWithEmailAndPassword(
+          auth,
+          cleanEmail,
+          password
+        );
+
+        // 1) Enviar verificación
+        await sendEmailVerification(cred.user);
+
+        // 2) Cerrar sesión para obligar verificación antes de entrar
+        await signOut(auth);
+
+        // 3) Ir a pantalla de verificación
+        router.push("/auth/verify");
+        return;
       } else {
-        await signInWithEmailAndPassword(auth, email, password);
+        // ✅ LOGIN
+        const cred = await signInWithEmailAndPassword(
+          auth,
+          cleanEmail,
+          password
+        );
+
+        // A veces emailVerified llega cacheado
+        await cred.user.reload();
+
+        if (!cred.user.emailVerified) {
+          // Limpio: no dejar sesión abierta si no verificó
+          await signOut(auth);
+          router.push("/auth/verify");
+          return;
+        }
       }
 
       router.push("/dashboard");
     } catch (err: any) {
-      setError(err?.message ?? "Ocurrió un error al autenticar.");
+      const code = err?.code as string | undefined;
+
+      // Mensajes más humanos (opcional pero ayuda UX)
+      if (code === "auth/invalid-email") setError("El correo no es válido.");
+      else if (code === "auth/user-not-found")
+        setError("No existe una cuenta con ese correo.");
+      else if (code === "auth/wrong-password")
+        setError("Contraseña incorrecta.");
+      else if (code === "auth/email-already-in-use")
+        setError("Ese correo ya está registrado.");
+      else if (code === "auth/too-many-requests")
+        setError("Demasiados intentos. Espera un momento y vuelve a intentar.");
+      else setError(err?.message ?? "Ocurrió un error al autenticar.");
     } finally {
       setLoading(false);
     }

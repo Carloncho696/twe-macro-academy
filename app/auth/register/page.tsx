@@ -10,9 +10,15 @@ export default function RegisterPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && user) {
-      router.replace("/dashboard");
+    if (loading) return;
+    if (!user) return;
+
+    if (!user.emailVerified) {
+      router.replace("/auth/verify");
+      return;
     }
+
+    router.replace("/dashboard");
   }, [user, loading, router]);
 
   if (loading) return null;
