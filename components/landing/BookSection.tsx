@@ -32,7 +32,7 @@ export default function BookSection() {
   );
 
   // ⚠️ Cambia por el número real (formato: país + número, sin + ni espacios)
-  const whatsappLink = `https://wa.me/51999999999?text=${whatsappMessage}`;
+  const whatsappLink = `https://wa.me/51913978367?text=${ "Hola, quiero información para comprar el libro de TWE Macro Academy. ¿Podrías indicarme los pasos de pago y acceso?"}`;
 
   const frontSrc = "/portada-libro.jpg";
   const backSrc = "/contraportada-libro.png";

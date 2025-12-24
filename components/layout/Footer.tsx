@@ -44,7 +44,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="/#about"
+                  href="/nosotros"
                   scroll={false}
                   className="text-sm text-slate-400 transition-colors hover:text-cyan-300"
                 >
@@ -55,7 +55,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/#methodology"
-                  scroll={false}
+                  scroll={true}
                   className="text-sm text-slate-400 transition-colors hover:text-cyan-300"
                 >
                   Metodología
@@ -65,7 +65,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/#book"
-                  scroll={false}
+                  scroll={true}
                   className="text-sm text-slate-400 transition-colors hover:text-cyan-300"
                 >
                   El Libro
@@ -75,7 +75,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/#testimonials"
-                  scroll={false}
+                  scroll={true}
                   className="text-sm text-slate-400 transition-colors hover:text-cyan-300"
                 >
                   Testimonios
@@ -196,7 +196,7 @@ export default function Footer() {
             </p>
 
             <p className="max-w-md text-center text-xs text-slate-500 md:text-right">
-              El trading conlleva riesgos significativos.  
+              El trading y las inversiones conllevan riesgos significativos.  
               El rendimiento pasado no garantiza resultados futuros.
             </p>
           </div>

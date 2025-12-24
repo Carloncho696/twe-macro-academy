@@ -5,9 +5,61 @@ import Link from "next/link";
 
 type Video = { title: string; youtubeId: string; note?: string };
 
+type Announcement = {
+  id: string;
+  tag?: "IMPORTANTE" | "EVENTO" | "NUEVO" | "PROMO";
+  title: string;
+  message: string;
+  dateLabel?: string; // ej: "Vie 27 Dic • 8:00 pm (Perú)"
+  href?: string; // link de acción (opcional)
+  cta?: string; // texto del botón (opcional)
+  image?: {
+    src: string; // pon la imagen en /public/anuncios/...
+    alt: string;
+  };
+  active?: boolean; // para apagar/encender anuncios
+};
+
 export default function DashboardHome() {
   // ✅ Ruta del PDF (ponlo en /public/free-book/adelanto.pdf)
-  const freePdfUrl = "/free-book/adelanto.pdf";
+  const freePdfUrl = "/Propuesta.pdf";
+
+  // ✅ ANUNCIOS (solo editas esto y listo)
+  const announcements: Announcement[] = useMemo(
+    () => [
+      {
+        id: "event-1",
+        tag: "EVENTO",
+        title: "Clase en vivo: Análisis Macro (Zoom)",
+        message:
+          "Este viernes tendremos sesión en vivo con Q&A. Lleva tus dudas y tu mapa semanal.",
+        dateLabel: "Vie 27 Dic • 8:00 pm (Perú)",
+        href: "/#book", // cámbialo por tu ruta real (o link externo si quieres)
+        cta: "Ver detalles",
+        image: {
+          src: "/anuncios/evento-zoom.jpg",
+          alt: "Clase en vivo - Análisis Macro",
+        },
+        active: true,
+      },
+      {
+        id: "promo-1",
+        tag: "PROMO",
+        title: "Promo navideña: acceso completo por tiempo limitado",
+        message:
+          "Activa el pack (libro + videos) con precio especial. Luego vuelve a precio normal.",
+        dateLabel: "Válido hasta el 31 Dic",
+        href: "/#book",
+        cta: "Aprovechar promo",
+        active: true,
+      },
+      // 👉 Si no quieres más anuncios, apaga con active:false
+      // { id:"x", title:"...", message:"...", active:false }
+    ],
+    []
+  );
+
+  const activeAnnouncements = announcements.filter((a) => a.active !== false);
 
   // ✅ 2 videos GRATIS (pon aquí los IDs reales)
   const freeVideos: Video[] = useMemo(
@@ -28,39 +80,138 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-6">
-      {/* HERO */}
+      {/* =======================
+          ANUNCIOS (BLOQUE SUPERIOR)
+         ======================= */}
       <section className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg p-6 md:p-8">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">
-          Contenido gratuito
-        </h1>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 className="text-xl md:text-2xl font-bold">📣 Anuncios</h2>
+            <p className="text-gray-300 text-sm max-w-2xl mt-1">
+              Novedades, eventos y comunicados importantes de la academia.
+            </p>
+          </div>
 
-        <p className="text-gray-300 text-sm max-w-2xl">
-          Aquí tienes una muestra real del material:{" "}
-          <span className="text-white font-medium">5 páginas</span> en PDF +{" "}
-          <span className="text-white font-medium">2 videos</span> gratuitos del
-          autor.
-        </p>
-
-        <div className="mt-5 flex flex-col sm:flex-row gap-3">
-          <a
-            href="#contenido"
-            className="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-semibold text-sm hover:bg-white/10 transition text-center"
-          >
-            👇 Ver muestra completa
-          </a>
-
-          <Link
-            href="/#book"
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 text-black font-semibold text-sm shadow-[0_0_20px_rgba(255,255,0,0.18)] hover:opacity-90 transition text-center"
-          >
-            ✅ Desbloquear libro + videos
-          </Link>
+          {/* Botón opcional (si luego quieres un /dashboard/anuncios) */}
+          <span className="hidden sm:inline-flex rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-gray-300">
+            {activeAnnouncements.length} activo(s)
+          </span>
         </div>
 
-        <p className="mt-4 text-xs text-gray-400 max-w-2xl">
-          *El libro completo incluye todo el contenido + videos por capítulo.
-        </p>
+        {activeAnnouncements.length === 0 ? (
+          <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-5">
+            <p className="text-sm text-gray-300">
+              📭 Por ahora no hay anuncios. Mantente atento a futuras novedades.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {activeAnnouncements.map((a) => (
+              <div
+                key={a.id}
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20"
+              >
+                {/* Glow sutil */}
+                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition">
+                  <div className="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-yellow-500/10 blur-2xl" />
+                  <div className="absolute -bottom-28 -left-28 h-64 w-64 rounded-full bg-cyan-500/10 blur-2xl" />
+                </div>
+
+                {/* Header */}
+                <div className="relative p-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {a.tag ? (
+                          <span
+                            className={[
+                              "text-[11px] font-semibold px-2 py-1 rounded-lg border",
+                              a.tag === "IMPORTANTE"
+                                ? "text-red-200 border-red-500/30 bg-red-500/10"
+                                : a.tag === "EVENTO"
+                                ? "text-cyan-200 border-cyan-500/30 bg-cyan-500/10"
+                                : a.tag === "NUEVO"
+                                ? "text-emerald-200 border-emerald-500/30 bg-emerald-500/10"
+                                : "text-yellow-200 border-yellow-500/30 bg-yellow-500/10",
+                            ].join(" ")}
+                          >
+                            {a.tag}
+                          </span>
+                        ) : null}
+
+                        {a.dateLabel ? (
+                          <span className="text-[11px] text-gray-400">
+                            {a.dateLabel}
+                          </span>
+                        ) : null}
+                      </div>
+
+                      <h3 className="mt-2 text-base md:text-lg font-bold text-white truncate">
+                        {a.title}
+                      </h3>
+
+                      <p className="mt-2 text-sm text-gray-300 leading-relaxed">
+                        {a.message}
+                      </p>
+                    </div>
+
+                    {/* Imagen opcional */}
+                    {a.image ? (
+                      <div className="hidden sm:block w-28 h-20 rounded-xl overflow-hidden border border-white/10 bg-white/5 flex-shrink-0">
+                        {/* Usamos img normal para que solo sea "poner y listo" */}
+                        <img
+                          src={a.image.src}
+                          alt={a.image.alt}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+
+                  {/* CTA */}
+                  {a.href && a.cta ? (
+                    <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                      <Link
+                        href={a.href}
+                        className="px-4 py-2 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 text-black font-semibold text-sm hover:opacity-90 transition text-center"
+                      >
+                        {a.cta}
+                      </Link>
+
+                      <a
+                        href="#contenido"
+                        className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white font-semibold text-sm hover:bg-white/10 transition text-center"
+                      >
+                        Ver contenido gratis
+                      </a>
+                    </div>
+                  ) : (
+                    <div className="mt-4">
+                      <a
+                        href="#contenido"
+                        className="inline-flex px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white font-semibold text-sm hover:bg-white/10 transition"
+                      >
+                        Ver contenido gratis
+                      </a>
+                    </div>
+                  )}
+
+                  <p className="mt-3 text-[11px] text-gray-400">
+                    Tip: para cambiar anuncios, solo edita el array{" "}
+                    <span className="text-gray-200 font-medium">
+                      announcements
+                    </span>{" "}
+                    en este archivo.
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
+
+    
 
       {/* CONTENIDO GRATIS (SIEMPRE VISIBLE) */}
       <section
@@ -99,13 +250,13 @@ export default function DashboardHome() {
             <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
               <iframe
                 title="Adelanto del libro (PDF)"
-                src="/Propuesta.pdf"
+                // ✅ usa la variable para evitar confusiones de rutas
+                src={freePdfUrl}
                 className="w-full h-[620px] md:h-[720px]"
               />
             </div>
 
             <div className="mt-3 flex flex-col sm:flex-row gap-2">
-              {/* Si NO quieres descarga, puedes quitar este botón */}
               <a
                 href={freePdfUrl}
                 target="_blank"
@@ -125,7 +276,9 @@ export default function DashboardHome() {
 
             <p className="mt-3 text-xs text-gray-400">
               Coloca el PDF aquí:{" "}
-              <span className="text-gray-200">/public/free-book/adelanto.pdf</span>
+              <span className="text-gray-200">
+                /public/free-book/adelanto.pdf
+              </span>
             </p>
           </div>
 
@@ -193,7 +346,8 @@ export default function DashboardHome() {
         {/* CTA FINAL */}
         <div className="mt-6 rounded-2xl border border-yellow-500/20 bg-yellow-500/10 p-5">
           <p className="text-sm text-gray-200">
-            ¿Te gustó la muestra? El material completo está diseñado para llevarte{" "}
+            ¿Te gustó la muestra? El material completo está diseñado para
+            llevarte{" "}
             <span className="text-white font-semibold">paso a paso</span> con
             ejemplos y videos por capítulo.
           </p>
