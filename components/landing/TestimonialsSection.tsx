@@ -12,43 +12,43 @@ type Testimonial = {
 
 const testimonials: Testimonial[] = [
   {
-    name: "Carlos M.",
+    name: "Maykol E.",
     role: "Trader Independiente",
-    avatar: "CM",
+    avatar: "ME",
     content:
-      "Antes operaba sin entender el contexto macro. Ahora mis decisiones tienen fundamento y mis resultados han mejorado significativamente.",
+      "Lo máximo Eberth, agradecido por compartir tus conocimientos a detalle, mostrar cosas que no se ven en el gráfico e información que casi nadie comparte🔥 Sin duda la mejor inversión que tuve en el 2025👏",
     rating: 5,
   },
   {
-    name: "María G.",
-    role: "Inversora",
-    avatar: "MG",
+    name: "Jhonatan F.",
+    role: "Inversor",
+    avatar: "JF",
     content:
-      "La combinación de análisis técnico con macroeconomía es única. El libro explica todo de manera clara y con ejemplos reales.",
+      "Lo mejor de Latinoamérica sin duda, llevo más de un año y mi nivel como inversionista ha mejorado increíblemente. Aprender como se mueve el mercado correctamente, a disernir cada evento económico y así tomar una mejor decisión, y sobre todo perder el miedo a operar. Agradecido con esta academia.",
     rating: 5,
   },
   {
-    name: "Roberto S.",
-    role: "Ex-Principiante",
-    avatar: "RS",
-    content:
-      "Empecé desde cero y el programa me llevó paso a paso. La sección de mentalidad del operador fue transformadora para mí.",
-    rating: 5,
-  },
-  {
-    name: "Jorge P.",
-    role: "Swing Trader",
-    avatar: "JP",
-    content:
-      "Me ayudó a ordenar mis ideas: contexto, estructura y ejecución. Ahora opero con calma y criterio.",
-    rating: 5,
-  },
-  {
-    name: "Ana L.",
+    name: "Marco J.",
     role: "Estudiante",
-    avatar: "AL",
+    avatar: "MJ",
     content:
-      "Los ejemplos aterrizan todo. Dejé de adivinar y empecé a leer el mercado con lógica.",
+      "En TWE llevo 1año y la experiencia es muy potente, un proceso completo que te ayudará a entender el mercado además de formarte para operar en el mismo. El mentor es un máster en el tema que te llevará paso a paso a conocer lo técnico y macroeconómico para interpretar el mercado. No pierdas esta oportunidad y se parte de algo concreto y con resultados TWE.",
+    rating: 5,
+  },
+  {
+    name: "Frank Ortegui",
+    role: "Estudiante",
+    avatar: "FO",
+    content:
+      "Plan de formacion de calidad, con seguimiento constante, donde al finalizar estaras listo para plasmar los conocimientos en el mercado real .",
+    rating: 5,
+  },
+  {
+    name: "Noe G.",
+    role: "Trader",
+    avatar: "NG",
+    content:
+      "Una verdadera formación aprender el apartado macroeconomico es la única diferencia que marca en ser un verdadero operador, ya que aprenderás de manera real de como se mueve el mercado sector por sector , muy recomendado TWE.",
     rating: 5,
   },
 ];

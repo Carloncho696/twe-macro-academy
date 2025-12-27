@@ -27,8 +27,6 @@ export default function DigitalBookPage() {
             userEmail={email}
             userId={uid}
             pdfUrl="/api/book"
-            // HOY: PDF de prueba
-            // MAÑANA: cambia a "/api/book"
           />
         </div>
       </div>
